@@ -55,9 +55,7 @@ export function InstallScreen({
               </div>
               <p className="text-sm text-foreground/70">
                 Tap the{" "}
-                <span className="font-semibold text-foreground">
-                  Share
-                </span>{" "}
+                <span className="font-semibold text-foreground">Share</span>{" "}
                 button in Safari
               </p>
             </div>
