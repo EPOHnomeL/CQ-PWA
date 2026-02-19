@@ -47,13 +47,15 @@ export function QuoteCard({
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(`"${quote.quote}" — ${quote.author}`);
+      await navigator.clipboard.writeText(
+        `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`,
+      );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // Fallback for older browsers
       const textArea = document.createElement("textarea");
-      textArea.value = `"${quote.quote}" — ${quote.author}`;
+      textArea.value = `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
@@ -68,7 +70,8 @@ export function QuoteCard({
       try {
         await navigator.share({
           title: "Christian Quote",
-          text: `"${quote.quote}" — ${quote.author}`,
+          text: `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`,
+          url: "https://cq-pwa.vercel.app",
         });
       } catch {
         // User cancelled share

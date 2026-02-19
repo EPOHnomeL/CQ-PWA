@@ -1,13 +1,54 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useState, useEffect, useCallback } from "react";
 import { useQuoteSeeder } from "@/hooks/useQuoteSeeder";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
 import { LoadingScreen } from "./LoadingScreen";
+import { InstallScreen } from "./InstallScreen";
 import { BottomNav } from "./BottomNav";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { isSeeding, progress, error } = useQuoteSeeder();
+  const { canInstall, isInstalled, isIOS, isMobile, promptInstall } =
+    usePWAInstall();
 
+  // Show install screen on mobile if not already installed and not dismissed this session
+  const [showInstall, setShowInstall] = useState(false);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("cq-install-dismissed");
+    if (isMobile && !isInstalled && !dismissed) {
+      setShowInstall(true);
+    }
+  }, [isMobile, isInstalled]);
+
+  const handleInstall = useCallback(async () => {
+    const accepted = await promptInstall();
+    // Dismiss either way — if they accepted, app will reopen standalone
+    sessionStorage.setItem("cq-install-dismissed", "1");
+    if (!accepted) {
+      setShowInstall(false);
+    }
+  }, [promptInstall]);
+
+  const handleSkip = useCallback(() => {
+    sessionStorage.setItem("cq-install-dismissed", "1");
+    setShowInstall(false);
+  }, []);
+
+  // Gate 1: Install prompt (mobile only)
+  if (showInstall) {
+    return (
+      <InstallScreen
+        canInstall={canInstall}
+        isIOS={isIOS}
+        onInstall={() => void handleInstall()}
+        onSkip={handleSkip}
+      />
+    );
+  }
+
+  // Gate 2: Seeding
   if (isSeeding) {
     return <LoadingScreen progress={progress} error={error} />;
   }
