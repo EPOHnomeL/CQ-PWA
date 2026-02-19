@@ -1,0 +1,1134 @@
+[
+  {
+    "topic": "Abortion",
+    "color": "#C70039"
+  },
+  {
+    "topic": "Achievement",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Adultery",
+    "color": "#FF3E96"
+  },
+  {
+    "topic": "Adversity",
+    "color": "#6C757D"
+  },
+  {
+    "topic": "Affliction",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Age",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "America",
+    "color": "#3C3B6E"
+  },
+  {
+    "topic": "Angels",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Anger",
+    "color": "#FF0000"
+  },
+  {
+    "topic": "Animals",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Anxiety",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Apathy",
+    "color": "#2F4F4F"
+  },
+  {
+    "topic": "Apostasy",
+    "color": "#696969"
+  },
+  {
+    "topic": "Assurance",
+    "color": "#228B22"
+  },
+  {
+    "topic": "Atheism",
+    "color": "#F5DEB3"
+  },
+  {
+    "topic": "Atonement",
+    "color": "#D8BFD8"
+  },
+  {
+    "topic": "Attitude",
+    "color": "#B8860B"
+  },
+  {
+    "topic": "Authority",
+    "color": "#000080"
+  },
+  {
+    "topic": "Backsliding",
+    "color": "#2E8B57"
+  },
+  {
+    "topic": "Baptism",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Beauty",
+    "color": "#FF8C00"
+  },
+  {
+    "topic": "Believing",
+    "color": "#006400"
+  },
+  {
+    "topic": "Bitterness",
+    "color": "#FF1493"
+  },
+  {
+    "topic": "Blessings",
+    "color": "#DA70D6"
+  },
+  {
+    "topic": "Boasting",
+    "color": "#FFFFF0"
+  },
+  {
+    "topic": "Books",
+    "color": "#FFFFE0"
+  },
+  {
+    "topic": "Brokenness",
+    "color": "#FFFAFA"
+  },
+  {
+    "topic": "Business",
+    "color": "#F0E68C"
+  },
+  {
+    "topic": "Carnality",
+    "color": "#DC143C"
+  },
+  {
+    "topic": "Change",
+    "color": "#FFC500"
+  },
+  {
+    "topic": "Character",
+    "color": "#6B8E23"
+  },
+  {
+    "topic": "Charity",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Chastisement",
+    "color": "#2F4F4F"
+  },
+  {
+    "topic": "Cheerfulness",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Children",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Choices",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Christ",
+    "color": "#FFFFFF"
+  },
+  {
+    "topic": "Christianity",
+    "color": "#7FFFD4"
+  },
+  {
+    "topic": "Christians",
+    "color": "#B0C4DE"
+  },
+  {
+    "topic": "Christmas",
+    "color": "#FF0000"
+  },
+  {
+    "topic": "Church",
+    "color": "#800000"
+  },
+  {
+    "topic": "Circumstances",
+    "color": "#F5DEB3"
+  },
+  {
+    "topic": "Comfort",
+    "color": "#40E0D0"
+  },
+  {
+    "topic": "Commitment",
+    "color": "#008000"
+  },
+  {
+    "topic": "Community",
+    "color": "#FFA500"
+  },
+  {
+    "topic": "Compassion",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Compromise",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Confession",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Conscience",
+    "color": "#C0C0C0"
+  },
+  {
+    "topic": "Consecration",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Contentment",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Conversion",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Conviction",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Courage",
+    "color": "#FF4500"
+  },
+  {
+    "topic": "Creation",
+    "color": "#00FF00"
+  },
+  {
+    "topic": "Crime",
+    "color": "#DC143C"
+  },
+  {
+    "topic": "Criticism",
+    "color": "#6B8E23"
+  },
+  {
+    "topic": "Death",
+    "color": "#708090"
+  },
+  {
+    "topic": "Deception",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Depression",
+    "color": "#1E90FF"
+  },
+  {
+    "topic": "Diligence",
+    "color": "#FF5733"
+  },
+  {
+    "topic": "Disappointment",
+    "color": "#6C757D"
+  },
+  {
+    "topic": "Discernment",
+    "color": "#6A5ACD"
+  },
+  {
+    "topic": "Discipleship",
+    "color": "#006400"
+  },
+  {
+    "topic": "Discipline",
+    "color": "#B22222"
+  },
+  {
+    "topic": "Discontentment",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Discouragement",
+    "color": "#708090"
+  },
+  {
+    "topic": "Discretion",
+    "color": "#778899"
+  },
+  {
+    "topic": "Divorce",
+    "color": "#E6E6FA"
+  },
+  {
+    "topic": "Doctrine",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Doubt",
+    "color": "#808080"
+  },
+  {
+    "topic": "Drunkenness",
+    "color": "#800000"
+  },
+  {
+    "topic": "Education",
+    "color": "#7B68EE"
+  },
+  {
+    "topic": "Encouragement",
+    "color": "#32CD32"
+  },
+  {
+    "topic": "Endurance",
+    "color": "#2F4F4F"
+  },
+  {
+    "topic": "Enemies",
+    "color": "#FF6347"
+  },
+  {
+    "topic": "Envy",
+    "color": "#00FFFF"
+  },
+  {
+    "topic": "Eternal Life",
+    "color": "#8FBC8F"
+  },
+  {
+    "topic": "Eternity",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Evangelism",
+    "color": "#F0E68C"
+  },
+  {
+    "topic": "Evolution",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Examples",
+    "color": "#DA70D6"
+  },
+  {
+    "topic": "Excellence",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Failure",
+    "color": "#CD5C5C"
+  },
+  {
+    "topic": "Faith",
+    "color": "#FF8C00"
+  },
+  {
+    "topic": "Faithful",
+    "color": "#FF1493"
+  },
+  {
+    "topic": "Family",
+    "color": "#00BFFF"
+  },
+  {
+    "topic": "Fasting",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Fathers",
+    "color": "#808000"
+  },
+  {
+    "topic": "Fear",
+    "color": "#FF4500"
+  },
+  {
+    "topic": "Feelings",
+    "color": "#F9A7B0"
+  },
+  {
+    "topic": "Fellowship",
+    "color": "#FFE6CC"
+  },
+  {
+    "topic": "Finances",
+    "color": "#00FFFF"
+  },
+  {
+    "topic": "Fire",
+    "color": "#FF4500"
+  },
+  {
+    "topic": "Foolishness",
+    "color": "#FF00FF"
+  },
+  {
+    "topic": "Forgiveness",
+    "color": "#C8E6C9"
+  },
+  {
+    "topic": "Freedom",
+    "color": "#66CD00"
+  },
+  {
+    "topic": "Friendship",
+    "color": "#F5F5DC"
+  },
+  {
+    "topic": "Gentleness",
+    "color": "#F08080"
+  },
+  {
+    "topic": "Gifts",
+    "color": "#D8BFD8"
+  },
+  {
+    "topic": "Giving",
+    "color": "#B0E0E6"
+  },
+  {
+    "topic": "Goals",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "God",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Godliness",
+    "color": "#00FF00"
+  },
+  {
+    "topic": "Good and Evil",
+    "color": "#FF7F50"
+  },
+  {
+    "topic": "Gossip",
+    "color": "#FA8072"
+  },
+  {
+    "topic": "Government",
+    "color": "#008080"
+  },
+  {
+    "topic": "Grace",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Gratitude",
+    "color": "#FFFF00"
+  },
+  {
+    "topic": "Greed",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Grief",
+    "color": "#708090"
+  },
+  {
+    "topic": "Growth",
+    "color": "#ADFF2F"
+  },
+  {
+    "topic": "Habits",
+    "color": "#FF8C00"
+  },
+  {
+    "topic": "Happiness",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Hatred",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Healing",
+    "color": "#00CED1"
+  },
+  {
+    "topic": "Health",
+    "color": "#98FB98"
+  },
+  {
+    "topic": "Heaven",
+    "color": "#87CEFA"
+  },
+  {
+    "topic": "Hell",
+    "color": "#FF6347"
+  },
+  {
+    "topic": "Helping",
+    "color": "#FF1493"
+  },
+  {
+    "topic": "Heresy",
+    "color": "#DC143C"
+  },
+  {
+    "topic": "History",
+    "color": "#F4A460"
+  },
+  {
+    "topic": "Holiness",
+    "color": "#FFFFFF"
+  },
+  {
+    "topic": "Holy Spirit",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Home",
+    "color": "#B0E0E6"
+  },
+  {
+    "topic": "Honesty",
+    "color": "#00CED1"
+  },
+  {
+    "topic": "Hope",
+    "color": "#00BFFF"
+  },
+  {
+    "topic": "Humanism",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Humility",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Humorous",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Hurt",
+    "color": "#FF1493"
+  },
+  {
+    "topic": "Hypocrisy",
+    "color": "#800000"
+  },
+  {
+    "topic": "Idleness",
+    "color": "#F5DEB3"
+  },
+  {
+    "topic": "Idolatry",
+    "color": "#CD853F"
+  },
+  {
+    "topic": "Ignorance",
+    "color": "#F0E68C"
+  },
+  {
+    "topic": "Illness",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Immorality",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Impatience",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Inspiration",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Integrity",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Intercession",
+    "color": "#F0E68C"
+  },
+  {
+    "topic": "Jealousy",
+    "color": "#FF7F50"
+  },
+  {
+    "topic": "Jesus",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Joy",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Judging",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Justice",
+    "color": "#800080"
+  },
+  {
+    "topic": "Justification",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Kindness",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Knowledge",
+    "color": "#4169E1"
+  },
+  {
+    "topic": "Liberty",
+    "color": "#1e90ff"
+  },
+  {
+    "topic": "Life",
+    "color": "#00ff7f"
+  },
+  {
+    "topic": "Laughter",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Laziness",
+    "color": "#F4A460"
+  },
+  {
+    "topic": "Leadership",
+    "color": "#2F4F4F"
+  },
+  {
+    "topic": "Learning",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Legalism",
+    "color": "#800080"
+  },
+  {
+    "topic": "Liberty",
+    "color": "#00FF00"
+  },
+  {
+    "topic": "Life",
+    "color": "#32CD32"
+  },
+  {
+    "topic": "Light",
+    "color": "#FFFFE0"
+  },
+  {
+    "topic": "Love",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Lust",
+    "color": "#FF00FF"
+  },
+  {
+    "topic": "Lying",
+    "color": "#FF5733"
+  },
+  {
+    "topic": "Marriage",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Materialism",
+    "color": "#CC9966"
+  },
+  {
+    "topic": "Meditation",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Meekness",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Men",
+    "color": "#00008b"
+  },
+  {
+    "topic": "Mercy",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Miracles",
+    "color": "#FFB6C1"
+  },
+  {
+    "topic": "Missions",
+    "color": "#0066CC"
+  },
+  {
+    "topic": "Modesty",
+    "color": "#add8e6"
+  },
+  {
+    "topic": "Money",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Morality",
+    "color": "#6b8e23"
+  },
+  {
+    "topic": "Mothers",
+    "color": "#ff69b4"
+  },
+  {
+    "topic": "Murder",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Music",
+    "color": "#9933FF"
+  },
+  {
+    "topic": "Nature",
+    "color": "#228B22"
+  },
+  {
+    "topic": "Obedience",
+    "color": "#00CED1"
+  },
+  {
+    "topic": "Overcoming",
+    "color": "#228B22"
+  },
+  {
+    "topic": "Pain",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Parents",
+    "color": "#9370db"
+  },
+  {
+    "topic": "Passion",
+    "color": "#b22222"
+  },
+  {
+    "topic": "Patience",
+    "color": "#FFE4B5"
+  },
+  {
+    "topic": "Patriotism",
+    "color": "#c0c0c0"
+  },
+  {
+    "topic": "Peace",
+    "color": "#008000"
+  },
+  {
+    "topic": "Persecution",
+    "color": "#800000"
+  },
+  {
+    "topic": "Perseverance",
+    "color": "#FA8072"
+  },
+  {
+    "topic": "Philosophy",
+    "color": "#9ACD32"
+  },
+  {
+    "topic": "Piety",
+    "color": "#9400D3"
+  },
+  {
+    "topic": "Politics",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Power",
+    "color": "#FFA500"
+  },
+  {
+    "topic": "Praise",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Prayer",
+    "color": "#8B008B"
+  },
+  {
+    "topic": "Preaching",
+    "color": "#000080"
+  },
+  {
+    "topic": "Pride",
+    "color": "#800000"
+  },
+  {
+    "topic": "Prophecy",
+    "color": "#9400D3"
+  },
+  {
+    "topic": "Prosperity",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Providence",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Psychology",
+    "color": "#ffe4e1"
+  },
+  {
+    "topic": "Purity",
+    "color": "#FFFFFF"
+  },
+  {
+    "topic": "Quarreling",
+    "color": "#ff69b4"
+  },
+  {
+    "topic": "Reading",
+    "color": "#00bfff"
+  },
+  {
+    "topic": "Reasoning",
+    "color": "#6a5acd"
+  },
+  {
+    "topic": "Rebellion",
+    "color": "#FF4500"
+  },
+  {
+    "topic": "Redemption",
+    "color": "#8b008b"
+  },
+  {
+    "topic": "Relationships",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Religion",
+    "color": "#FFDAB9"
+  },
+  {
+    "topic": "Renewal",
+    "color": "#87cefa"
+  },
+  {
+    "topic": "Repentance",
+    "color": "#9932CC"
+  },
+  {
+    "topic": "Responsibility",
+    "color": "#FF7F50"
+  },
+  {
+    "topic": "Rest",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Restoration",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Resurrection",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Revenge",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "Revival",
+    "color": "#FF1493"
+  },
+  {
+    "topic": "Rewards",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Righteousness",
+    "color": "#008000"
+  },
+  {
+    "topic": "Romance",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Sin",
+    "color": "#FF0000"
+  },
+  {
+    "topic": "Sacrifice",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Salvation",
+    "color": "#87CEEB"
+  },
+  {
+    "topic": "Sanctification",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Satan",
+    "color": "#B22222"
+  },
+  {
+    "topic": "Scripture",
+    "color": "#00BFFF"
+  },
+  {
+    "topic": "Self-confidence",
+    "color": "#FFA500"
+  },
+  {
+    "topic": "Self-control",
+    "color": "#00CED1"
+  },
+  {
+    "topic": "Self-denial",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Self-esteem",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "Self-love",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Self-pity",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Self-righteousness",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Selfishness",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Service",
+    "color": "#00FF00"
+  },
+  {
+    "topic": "Sin",
+    "color": "#FF0000"
+  },
+  {
+    "topic": "Sports",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Stewardship",
+    "color": "#FF7F50"
+  },
+  {
+    "topic": "Strength",
+    "color": "#FFA500"
+  },
+  {
+    "topic": "Stress",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "Struggles",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Stubbornness",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Submission",
+    "color": "#FFC0CB"
+  },
+  {
+    "topic": "Success",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Suffering",
+    "color": "#FFA07A"
+  },
+  {
+    "topic": "Surrender",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "Teachers",
+    "color": "#00FF7F"
+  },
+  {
+    "topic": "Temptation",
+    "color": "#FF0000"
+  },
+  {
+    "topic": "Thankfulness",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "The Bible",
+    "color": "#00BFFF"
+  },
+  {
+    "topic": "The Cross",
+    "color": "#8B0000"
+  },
+  {
+    "topic": "The Future",
+    "color": "#ADD8E6"
+  },
+  {
+    "topic": "The Gospel",
+    "color": "#FFD700"
+  },
+  {
+    "topic": "The Heart",
+    "color": "#FF69B4"
+  },
+  {
+    "topic": "The Tongue",
+    "color": "#FFA500"
+  },
+  {
+    "topic": "The Trinity",
+    "color": "#add8e6"
+  },
+  {
+    "topic": "Theology",
+    "color": "#008080"
+  },
+  {
+    "topic": "Time",
+    "color": "#bdb76b"
+  },
+  {
+    "topic": "Tolerance",
+    "color": "#808000"
+  },
+  {
+    "topic": "Transformation",
+    "color": "#ffa500"
+  },
+  {
+    "topic": "Trials",
+    "color": "#6b8e23"
+  },
+  {
+    "topic": "Tribulation",
+    "color": "#800080"
+  },
+  {
+    "topic": "Trust",
+    "color": "#00ced1"
+  },
+  {
+    "topic": "Truth",
+    "color": "#1e90ff"
+  },
+  {
+    "topic": "Unbelief",
+    "color": "#000000"
+  },
+  {
+    "topic": "Unity",
+    "color": "#6a5acd"
+  },
+  {
+    "topic": "Victory",
+    "color": "#ffd700"
+  },
+  {
+    "topic": "Virtue",
+    "color": "#daa520"
+  },
+  {
+    "topic": "Vision",
+    "color": "#8b008b"
+  },
+  {
+    "topic": "Waiting",
+    "color": "#f5deb3"
+  },
+  {
+    "topic": "War",
+    "color": "#8b0000"
+  },
+  {
+    "topic": "Weakness",
+    "color": "#f08080"
+  },
+  {
+    "topic": "Wealth",
+    "color": "#ffdab9"
+  },
+  {
+    "topic": "Wisdom",
+    "color": "#ff6347"
+  },
+  {
+    "topic": "Witnessing",
+    "color": "#9370db"
+  },
+  {
+    "topic": "Women",
+    "color": "#ff69b4"
+  },
+  {
+    "topic": "Work",
+    "color": "#008000"
+  },
+  {
+    "topic": "Worldliness",
+    "color": "#b22222"
+  },
+  {
+    "topic": "Worry",
+    "color": "#ffff00"
+  },
+  {
+    "topic": "Worship",
+    "color": "#ff8c00"
+  },
+  {
+    "topic": "Youth",
+    "color": "#00ffff"
+  },
+  {
+    "topic": "Zeal",
+    "color": "#ff69b4"
+  },
+  {
+    "topic": "idleness",
+    "color": "#f08080"
+  },
+  {
+    "topic": "jesus",
+    "color": "#ffff00"
+  },
+  {
+    "topic": "life",
+    "color": "#00ff00"
+  }
+]

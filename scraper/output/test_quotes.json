@@ -1,0 +1,28 @@
+[
+  {
+    "_id": 201,
+    "topic": [
+      "Affliction",
+      "Passion"
+    ],
+    "author": "C.S. Lewis",
+    "quote": "Some people feel guilty about their anxieties and regard them as a defect of faith but they are afflictions, not sins. Like all afflictions, they are, if we can so take them, our share in the passion of Christ."
+  },
+  {
+    "_id": 202,
+    "topic": [
+      "Affliction",
+      "Knowledge",
+      "Morality"
+    ],
+    "author": "Blaise Pascal",
+    "quote": "Vanity of science. Knowledge of physical science will not console me for ignorance of morality in time of affliction, but knowledge of morality will always console me for ignorance of physical science."
+  },
+  {
+    "_id": 203,
+    "topic": [
+      "Explosions"],
+    "author": "Jonathan Vorster",
+    "quote": "Sometimes things just explode"
+  }
+]
