@@ -43,7 +43,7 @@ export default function TopicsPage() {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-3 pb-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pb-4">
           {topics.map((t) => (
             <button
               key={t.topic}

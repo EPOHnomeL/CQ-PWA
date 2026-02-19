@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Grid3X3, Search, Heart } from "lucide-react";
+import { Home, Grid3X3, Search, Heart, User } from "lucide-react";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
   { href: "/topics", label: "Topics", icon: Grid3X3 },
+  { href: "/authors", label: "Authors", icon: User },
   { href: "/search", label: "Search", icon: Search },
   { href: "/favorites", label: "Favorites", icon: Heart },
 ];
@@ -29,8 +30,8 @@ export function BottomNav() {
                   : "text-foreground/40 hover:text-foreground/70"
               }`}
             >
-              <Icon size={22} strokeWidth={isActive ? 2.5 : 1.8} />
-              <span className="text-[10px] font-medium">{label}</span>
+              <Icon size={20} strokeWidth={isActive ? 2.5 : 1.8} />
+              <span className="text-[9px] font-medium">{label}</span>
             </Link>
           );
         })}

@@ -63,3 +63,27 @@ export function getQuoteColor(
   const primary = quoteTopics[0].toLowerCase();
   return topicColorMap.get(primary) ?? DEFAULT_TOPIC_COLOR;
 }
+
+// Generate a CSS gradient from a quote's topic colors
+export function getQuoteGradient(
+  quoteTopics: string[],
+  topicColorMap: Map<string, string>,
+): string {
+  if (quoteTopics.length === 0) {
+    return `linear-gradient(135deg, ${DEFAULT_TOPIC_COLOR}, ${darkenColor(DEFAULT_TOPIC_COLOR, 0.35)})`;
+  }
+
+  const colors = quoteTopics
+    .slice(0, 3)
+    .map((t) => topicColorMap.get(t.toLowerCase()) ?? DEFAULT_TOPIC_COLOR);
+
+  if (colors.length === 1) {
+    return `linear-gradient(145deg, ${colors[0]}, ${darkenColor(colors[0], 0.4)})`;
+  }
+
+  if (colors.length === 2) {
+    return `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
+  }
+
+  return `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 50%, ${colors[2]} 100%)`;
+}

@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { db } from "@/lib/db";
-import type { Quote, Topic } from "@/lib/types";
+import type { Quote, Topic, Author, Book } from "@/lib/types";
 
-const DATA_VERSION = "1";
+const DATA_VERSION = "2";
 
 export function useQuoteSeeder() {
   const [isSeeding, setIsSeeding] = useState(true);
@@ -35,6 +35,17 @@ export function useQuoteSeeder() {
           throw new Error("Failed to fetch data files");
         }
 
+        // Optionally fetch books data (404 is fine — just means no books yet)
+        let books: Book[] = [];
+        try {
+          const booksRes = await fetch("/data/books.json");
+          if (booksRes.ok) {
+            books = await booksRes.json();
+          }
+        } catch {
+          // No books file — that's ok
+        }
+
         setProgress(20);
 
         const quotes: Quote[] = await quotesRes.json();
@@ -43,16 +54,35 @@ export function useQuoteSeeder() {
         if (cancelled) return;
         setProgress(40);
 
+        // Extract unique authors with quote counts
+        const authorMap = new Map<string, number>();
+        for (const q of quotes) {
+          authorMap.set(q.author, (authorMap.get(q.author) ?? 0) + 1);
+        }
+        const authors: Author[] = Array.from(authorMap.entries()).map(
+          ([name, quoteCount]) => ({ name, quoteCount }),
+        );
+
         // Clear existing data and seed in a transaction
         await db.transaction(
           "rw",
-          [db.quotes, db.topics, db.meta],
+          [db.quotes, db.topics, db.authors, db.books, db.meta],
           async () => {
             await db.quotes.clear();
             await db.topics.clear();
+            await db.authors.clear();
+            await db.books.clear();
 
             // Bulk insert topics (small dataset)
             await db.topics.bulkPut(topics);
+
+            // Bulk insert authors
+            await db.authors.bulkPut(authors);
+
+            // Bulk insert books if available
+            if (books.length > 0) {
+              await db.books.bulkPut(books);
+            }
 
             // Bulk insert quotes in chunks to avoid overwhelming memory
             const CHUNK_SIZE = 2000;

@@ -2,19 +2,30 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { db } from "@/lib/db";
-import type { Quote, Topic } from "@/lib/types";
+import type { Quote, Topic, Author, Book } from "@/lib/types";
 
-// Fetch a batch of random quotes, optionally filtered by topic
-export function useRandomQuotes(batchSize = 10, topic?: string) {
+// Fetch a batch of random quotes, optionally filtered by topic or author
+export function useRandomQuotes(
+  batchSize = 10,
+  topic?: string,
+  author?: string,
+) {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchBatch = useCallback(async () => {
     setLoading(true);
     try {
-      const count = topic
-        ? await db.quotes.where("topics").equals(topic).count()
-        : await db.quotes.count();
+      let collection;
+      if (author) {
+        collection = db.quotes.where("author").equals(author);
+      } else if (topic) {
+        collection = db.quotes.where("topics").equals(topic);
+      } else {
+        collection = db.quotes.toCollection();
+      }
+
+      const count = await collection.count();
 
       if (count === 0) {
         setQuotes([]);
@@ -30,16 +41,21 @@ export function useRandomQuotes(batchSize = 10, topic?: string) {
       }
 
       const results: Quote[] = [];
-      const collection = topic
-        ? db.quotes.where("topics").equals(topic)
-        : db.quotes.toCollection();
+      // Re-create collection for iteration
+      let iterCollection;
+      if (author) {
+        iterCollection = db.quotes.where("author").equals(author);
+      } else if (topic) {
+        iterCollection = db.quotes.where("topics").equals(topic);
+      } else {
+        iterCollection = db.quotes.toCollection();
+      }
 
-      // Use offset-based random selection
       const sortedOffsets = [...offsets].sort((a, b) => a - b);
       let currentOffset = 0;
       let offsetIdx = 0;
 
-      await collection.each((quote) => {
+      await iterCollection.each((quote) => {
         if (
           offsetIdx < sortedOffsets.length &&
           currentOffset === sortedOffsets[offsetIdx]
@@ -57,7 +73,7 @@ export function useRandomQuotes(batchSize = 10, topic?: string) {
     } finally {
       setLoading(false);
     }
-  }, [batchSize, topic]);
+  }, [batchSize, topic, author]);
 
   useEffect(() => {
     void fetchBatch();
@@ -124,4 +140,112 @@ export function useSearchQuotes(query: string) {
   }, [query]);
 
   return { results, loading };
+}
+
+// Get all authors sorted alphabetically
+export function useAuthors(searchQuery?: string) {
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        let all = await db.authors.orderBy("name").toArray();
+        if (searchQuery && searchQuery.length >= 2) {
+          const lower = searchQuery.toLowerCase();
+          all = all.filter((a) => a.name.toLowerCase().includes(lower));
+        }
+        setAuthors(all);
+      } catch (err) {
+        console.error("Error fetching authors:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    void load();
+  }, [searchQuery]);
+
+  return { authors, loading };
+}
+
+// Get all books by an author
+export function useBooksByAuthor(authorName: string) {
+  const [books, setBooks] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const refresh = useCallback(async () => {
+    setLoading(true);
+    try {
+      const result = await db.books
+        .where("authorName")
+        .equals(authorName)
+        .toArray();
+      setBooks(result);
+    } catch (err) {
+      console.error("Error fetching books:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [authorName]);
+
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
+  return { books, loading, refresh };
+}
+
+// Add a book to IndexedDB
+export async function addBook(book: Omit<Book, "id">): Promise<number> {
+  const id = await db.books.add(book as Book);
+  return id as number;
+}
+
+// Update a book in IndexedDB
+export async function updateBook(
+  id: number,
+  updates: Partial<Book>,
+): Promise<void> {
+  await db.books.update(id, updates);
+}
+
+// Delete a book from IndexedDB
+export async function deleteBook(id: number): Promise<void> {
+  // Unlink any quotes associated with this book
+  await db.quotes.where("bookId").equals(id).modify({ bookId: undefined });
+  await db.books.delete(id);
+}
+
+// Link a quote to a book
+export async function linkQuoteToBook(
+  quoteId: number,
+  bookId: number | undefined,
+): Promise<void> {
+  await db.quotes.update(quoteId, { bookId });
+}
+
+// Get quotes by book ID
+export function useQuotesByBook(bookId: number | undefined) {
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        if (bookId === undefined) {
+          setQuotes([]);
+          return;
+        }
+        const result = await db.quotes.where("bookId").equals(bookId).toArray();
+        setQuotes(result);
+      } catch (err) {
+        console.error("Error fetching quotes by book:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    void load();
+  }, [bookId]);
+
+  return { quotes, loading };
 }

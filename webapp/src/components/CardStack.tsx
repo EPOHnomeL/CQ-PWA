@@ -4,17 +4,22 @@ import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import { QuoteCard } from "./QuoteCard";
 import { useRandomQuotes } from "@/hooks/useQuotes";
-import { buildTopicColorMap, getQuoteColor } from "@/lib/colors";
+import {
+  buildTopicColorMap,
+  getQuoteColor,
+  getQuoteGradient,
+} from "@/lib/colors";
 import type { Quote, Topic } from "@/lib/types";
 import { RefreshCw } from "lucide-react";
 
 interface CardStackProps {
   topic?: string;
+  author?: string;
   topics: Topic[];
 }
 
-export function CardStack({ topic, topics }: CardStackProps) {
-  const { quotes, loading, refetch } = useRandomQuotes(15, topic);
+export function CardStack({ topic, author, topics }: CardStackProps) {
+  const { quotes, loading, refetch } = useRandomQuotes(15, topic, author);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [topicColorMap, setTopicColorMap] = useState<Map<string, string>>(
     new Map(),
@@ -98,6 +103,7 @@ export function CardStack({ topic, topics }: CardStackProps) {
               key={quote.id}
               quote={quote}
               color={getQuoteColor(quote.topics, topicColorMap)}
+              gradient={getQuoteGradient(quote.topics, topicColorMap)}
               onSwipe={handleSwipe}
               onFavorite={handleFavorite}
               isFront={i === 0}

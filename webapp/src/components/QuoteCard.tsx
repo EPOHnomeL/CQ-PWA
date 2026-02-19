@@ -9,6 +9,7 @@ import { getTextColor } from "@/lib/colors";
 interface QuoteCardProps {
   quote: Quote;
   color: string;
+  gradient: string;
   onSwipe: (direction: "left" | "right") => void;
   onFavorite?: (quote: Quote) => void;
   isFront?: boolean;
@@ -17,6 +18,7 @@ interface QuoteCardProps {
 export function QuoteCard({
   quote,
   color,
+  gradient,
   onSwipe,
   onFavorite,
   isFront = false,
@@ -97,9 +99,9 @@ export function QuoteCard({
       exit={{ x: 500, opacity: 0, transition: { duration: 0.3 } }}
     >
       <div
-        className="w-full h-full rounded-3xl p-6 flex flex-col justify-between shadow-2xl"
+        className="w-full h-full rounded-3xl p-5 sm:p-8 flex flex-col justify-between shadow-2xl overflow-hidden"
         style={{
-          backgroundColor: color,
+          background: gradient,
           color: textColor,
         }}
       >
@@ -122,9 +124,9 @@ export function QuoteCard({
         </div>
 
         {/* Quote text */}
-        <div className="flex-1 flex items-center justify-center py-6">
+        <div className="flex-1 flex items-center justify-center py-4 sm:py-6">
           <blockquote
-            className={`${getQuoteFontSize()} leading-relaxed text-center font-serif italic`}
+            className={`${getQuoteFontSize()} leading-relaxed text-center font-serif italic max-w-prose`}
           >
             &ldquo;{quote.quote}&rdquo;
           </blockquote>
@@ -137,7 +139,7 @@ export function QuoteCard({
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
-              className="p-2.5 rounded-full backdrop-blur-sm transition-transform active:scale-90"
+              className="p-3 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-transform active:scale-90 flex items-center justify-center"
               style={{
                 backgroundColor:
                   textColor === "#ffffff"
@@ -151,7 +153,7 @@ export function QuoteCard({
 
             <button
               onClick={handleShare}
-              className="p-2.5 rounded-full backdrop-blur-sm transition-transform active:scale-90"
+              className="p-3 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-transform active:scale-90 flex items-center justify-center"
               style={{
                 backgroundColor:
                   textColor === "#ffffff"
@@ -166,7 +168,7 @@ export function QuoteCard({
             {onFavorite && (
               <button
                 onClick={() => onFavorite(quote)}
-                className="p-2.5 rounded-full backdrop-blur-sm transition-transform active:scale-90"
+                className="p-3 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-transform active:scale-90 flex items-center justify-center"
                 style={{
                   backgroundColor:
                     textColor === "#ffffff"
