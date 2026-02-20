@@ -1,5 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getAuthUserId } from "@convex-dev/auth/server";
 
 // Add a quote to favorites
 export const addFavorite = mutation({
@@ -10,30 +11,21 @@ export const addFavorite = mutation({
     topics: v.array(v.string()),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Not authenticated");
-
-    const user = await ctx.db
-      .query("users")
-      .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
-      )
-      .unique();
-
-    if (!user) throw new Error("User not found");
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
 
     // Check if already favorited
     const existing = await ctx.db
       .query("favorites")
       .withIndex("by_user_quote", (q) =>
-        q.eq("userId", user._id).eq("quoteId", args.quoteId),
+        q.eq("userId", userId).eq("quoteId", args.quoteId),
       )
       .unique();
 
     if (existing) return existing._id;
 
     return await ctx.db.insert("favorites", {
-      userId: user._id,
+      userId,
       quoteId: args.quoteId,
       quote: args.quote,
       author: args.author,
@@ -49,22 +41,13 @@ export const removeFavorite = mutation({
     quoteId: v.number(),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) throw new Error("Not authenticated");
-
-    const user = await ctx.db
-      .query("users")
-      .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
-      )
-      .unique();
-
-    if (!user) throw new Error("User not found");
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
 
     const existing = await ctx.db
       .query("favorites")
       .withIndex("by_user_quote", (q) =>
-        q.eq("userId", user._id).eq("quoteId", args.quoteId),
+        q.eq("userId", userId).eq("quoteId", args.quoteId),
       )
       .unique();
 
@@ -78,21 +61,12 @@ export const removeFavorite = mutation({
 export const getFavorites = query({
   args: {},
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return [];
-
-    const user = await ctx.db
-      .query("users")
-      .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
-      )
-      .unique();
-
-    if (!user) return [];
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return [];
 
     return await ctx.db
       .query("favorites")
-      .withIndex("by_user", (q) => q.eq("userId", user._id))
+      .withIndex("by_user", (q) => q.eq("userId", userId))
       .order("desc")
       .collect();
   },
@@ -104,22 +78,13 @@ export const isFavorited = query({
     quoteId: v.number(),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
-    if (!identity) return false;
-
-    const user = await ctx.db
-      .query("users")
-      .withIndex("by_token", (q) =>
-        q.eq("tokenIdentifier", identity.tokenIdentifier),
-      )
-      .unique();
-
-    if (!user) return false;
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return false;
 
     const existing = await ctx.db
       .query("favorites")
       .withIndex("by_user_quote", (q) =>
-        q.eq("userId", user._id).eq("quoteId", args.quoteId),
+        q.eq("userId", userId).eq("quoteId", args.quoteId),
       )
       .unique();
 

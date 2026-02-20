@@ -70,7 +70,7 @@ export function getQuoteGradient(
   topicColorMap: Map<string, string>,
 ): string {
   if (quoteTopics.length === 0) {
-    return `linear-gradient(135deg, ${DEFAULT_TOPIC_COLOR}, ${darkenColor(DEFAULT_TOPIC_COLOR, 0.35)})`;
+    return `linear-gradient(135deg, ${DEFAULT_TOPIC_COLOR}, ${darkenColor(DEFAULT_TOPIC_COLOR, 0.45)})`;
   }
 
   const colors = quoteTopics
@@ -78,12 +78,12 @@ export function getQuoteGradient(
     .map((t) => topicColorMap.get(t.toLowerCase()) ?? DEFAULT_TOPIC_COLOR);
 
   if (colors.length === 1) {
-    return `linear-gradient(145deg, ${colors[0]}, ${darkenColor(colors[0], 0.4)})`;
+    return `linear-gradient(145deg, ${darkenColor(colors[0], 0.15)}, ${darkenColor(colors[0], 0.55)})`;
   }
 
   if (colors.length === 2) {
-    return `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 100%)`;
+    return `linear-gradient(135deg, ${darkenColor(colors[0], 0.25)} 0%, ${darkenColor(colors[1], 0.4)} 100%)`;
   }
 
-  return `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 50%, ${colors[2]} 100%)`;
+  return `linear-gradient(135deg, ${darkenColor(colors[0], 0.25)} 0%, ${darkenColor(colors[1], 0.3)} 50%, ${darkenColor(colors[2], 0.45)} 100%)`;
 }

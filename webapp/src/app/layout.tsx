@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ConvexClientProvider } from "@/lib/convex-provider";
+import { AuthGuardProvider } from "@/hooks/useAuthGuard";
 import { AppShell } from "@/components/AppShell";
 import "./globals.css";
 
@@ -49,7 +50,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ConvexClientProvider>
-          <AppShell>{children}</AppShell>
+          <AuthGuardProvider>
+            <AppShell>{children}</AppShell>
+          </AuthGuardProvider>
         </ConvexClientProvider>
       </body>
     </html>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { db } from "@/lib/db";
+import { getDailySeed, getSeededBatch } from "@/lib/seed";
 import type { Quote, Topic, Author, Book } from "@/lib/types";
 
-// Fetch a batch of random quotes, optionally filtered by topic or author
+// Fetch a batch of quotes, seeded for home feed or random for filtered views
 export function useRandomQuotes(
   batchSize = 10,
   topic?: string,
@@ -12,61 +13,101 @@ export function useRandomQuotes(
 ) {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
+  const pageRef = useRef(0);
+  const seedRef = useRef(getDailySeed());
+
+  // Reset page when filters change
+  useEffect(() => {
+    pageRef.current = 0;
+    seedRef.current = getDailySeed();
+  }, [topic, author]);
 
   const fetchBatch = useCallback(async () => {
     setLoading(true);
     try {
-      let collection;
-      if (author) {
-        collection = db.quotes.where("author").equals(author);
-      } else if (topic) {
-        collection = db.quotes.where("topics").equals(topic);
-      } else {
-        collection = db.quotes.toCollection();
-      }
+      const isHomeFeed = !topic && !author;
 
-      const count = await collection.count();
-
-      if (count === 0) {
-        setQuotes([]);
-        setLoading(false);
-        return;
-      }
-
-      // Generate random offsets
-      const offsets = new Set<number>();
-      const maxItems = Math.min(batchSize, count);
-      while (offsets.size < maxItems) {
-        offsets.add(Math.floor(Math.random() * count));
-      }
-
-      const results: Quote[] = [];
-      // Re-create collection for iteration
-      let iterCollection;
-      if (author) {
-        iterCollection = db.quotes.where("author").equals(author);
-      } else if (topic) {
-        iterCollection = db.quotes.where("topics").equals(topic);
-      } else {
-        iterCollection = db.quotes.toCollection();
-      }
-
-      const sortedOffsets = [...offsets].sort((a, b) => a - b);
-      let currentOffset = 0;
-      let offsetIdx = 0;
-
-      await iterCollection.each((quote) => {
-        if (
-          offsetIdx < sortedOffsets.length &&
-          currentOffset === sortedOffsets[offsetIdx]
-        ) {
-          results.push(quote);
-          offsetIdx++;
+      if (isHomeFeed) {
+        // Seeded deterministic order for home feed
+        const totalCount = await db.quotes.count();
+        if (totalCount === 0) {
+          setQuotes([]);
+          setLoading(false);
+          return;
         }
-        currentOffset++;
-      });
 
-      setQuotes(results);
+        const offsets = getSeededBatch(
+          totalCount,
+          seedRef.current,
+          pageRef.current,
+          batchSize,
+        );
+        pageRef.current += 1;
+
+        // Fetch quotes by their IDs (offsets are indices, map to actual IDs)
+        const allKeys = await db.quotes.orderBy("id").primaryKeys();
+        const targetIds = offsets
+          .filter((idx) => idx < allKeys.length)
+          .map((idx) => allKeys[idx]);
+
+        const results = await Promise.all(
+          targetIds.map((id) => db.quotes.get(id)),
+        );
+
+        setQuotes(results.filter((q): q is Quote => q !== undefined));
+      } else {
+        // Random for filtered views (topic/author)
+        let collection;
+        if (author) {
+          collection = db.quotes.where("author").equals(author);
+        } else if (topic) {
+          collection = db.quotes.where("topics").equals(topic);
+        } else {
+          collection = db.quotes.toCollection();
+        }
+
+        const count = await collection.count();
+
+        if (count === 0) {
+          setQuotes([]);
+          setLoading(false);
+          return;
+        }
+
+        // Generate random offsets
+        const offsets = new Set<number>();
+        const maxItems = Math.min(batchSize, count);
+        while (offsets.size < maxItems) {
+          offsets.add(Math.floor(Math.random() * count));
+        }
+
+        const results: Quote[] = [];
+        let iterCollection;
+        if (author) {
+          iterCollection = db.quotes.where("author").equals(author);
+        } else if (topic) {
+          iterCollection = db.quotes.where("topics").equals(topic);
+        } else {
+          iterCollection = db.quotes.toCollection();
+        }
+
+        const sortedOffsets = [...offsets].sort((a, b) => a - b);
+        let currentOffset = 0;
+        let offsetIdx = 0;
+
+        await iterCollection.each((quote) => {
+          if (
+            offsetIdx < sortedOffsets.length &&
+            currentOffset === sortedOffsets[offsetIdx]
+          ) {
+            results.push(quote);
+            offsetIdx++;
+          }
+          currentOffset++;
+        });
+
+        setQuotes(results);
+      }
     } catch (err) {
       console.error("Error fetching quotes:", err);
       setQuotes([]);
@@ -79,7 +120,14 @@ export function useRandomQuotes(
     void fetchBatch();
   }, [fetchBatch]);
 
-  return { quotes, loading, refetch: fetchBatch };
+  // Reset function for navigating back to home
+  const resetFeed = useCallback(() => {
+    pageRef.current = 0;
+    seedRef.current = getDailySeed();
+    void fetchBatch();
+  }, [fetchBatch]);
+
+  return { quotes, loading, refetch: fetchBatch, resetFeed };
 }
 
 // Get all topics with their colors

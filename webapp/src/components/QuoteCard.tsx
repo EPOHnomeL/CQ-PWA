@@ -5,6 +5,7 @@ import { motion, useMotionValue, useTransform, PanInfo } from "framer-motion";
 import { Heart, Share2, Copy, Check } from "lucide-react";
 import type { Quote } from "@/lib/types";
 import { getTextColor } from "@/lib/colors";
+import { useAuthGuard } from "@/hooks/useAuthGuard";
 
 interface QuoteCardProps {
   quote: Quote;
@@ -12,6 +13,7 @@ interface QuoteCardProps {
   gradient: string;
   onSwipe: (direction: "left" | "right") => void;
   onFavorite?: (quote: Quote) => void;
+  isFavorited?: boolean;
   isFront?: boolean;
 }
 
@@ -21,10 +23,12 @@ export function QuoteCard({
   gradient,
   onSwipe,
   onFavorite,
+  isFavorited = false,
   isFront = false,
 }: QuoteCardProps) {
   const [copied, setCopied] = useState(false);
   const textColor = getTextColor(color);
+  const { requireAuth } = useAuthGuard();
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-300, 0, 300], [-15, 0, 15]);
   const opacity = useTransform(
@@ -45,17 +49,17 @@ export function QuoteCard({
     [onSwipe],
   );
 
-  const handleCopy = useCallback(async () => {
+  const doCopy = useCallback(async () => {
+    const quoteUrl = `https://cq-pwa.vercel.app/quote/${quote.id}`;
     try {
       await navigator.clipboard.writeText(
-        `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`,
+        `"${quote.quote}" — ${quote.author}\n\n${quoteUrl}`,
       );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement("textarea");
-      textArea.value = `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`;
+      textArea.value = `"${quote.quote}" — ${quote.author}\n\n${quoteUrl}`;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand("copy");
@@ -65,21 +69,35 @@ export function QuoteCard({
     }
   }, [quote]);
 
-  const handleShare = useCallback(async () => {
+  const handleCopy = useCallback(() => {
+    requireAuth(() => void doCopy());
+  }, [requireAuth, doCopy]);
+
+  const doShare = useCallback(async () => {
+    const quoteUrl = `https://cq-pwa.vercel.app/quote/${quote.id}`;
     if (navigator.share) {
       try {
         await navigator.share({
           title: "Christian Quote",
-          text: `"${quote.quote}" — ${quote.author}\n\ncq-pwa.vercel.app`,
-          url: "https://cq-pwa.vercel.app",
+          text: `"${quote.quote}" — ${quote.author}`,
+          url: quoteUrl,
         });
       } catch {
         // User cancelled share
       }
     } else {
-      void handleCopy();
+      void doCopy();
     }
-  }, [quote, handleCopy]);
+  }, [quote, doCopy]);
+
+  const handleShare = useCallback(() => {
+    requireAuth(() => void doShare());
+  }, [requireAuth, doShare]);
+
+  const handleFavorite = useCallback(() => {
+    if (!onFavorite) return;
+    requireAuth(() => onFavorite(quote));
+  }, [requireAuth, onFavorite, quote]);
 
   // Determine font size based on quote length
   const getQuoteFontSize = () => {
@@ -170,7 +188,7 @@ export function QuoteCard({
 
             {onFavorite && (
               <button
-                onClick={() => onFavorite(quote)}
+                onClick={handleFavorite}
                 className="p-3 min-w-[44px] min-h-[44px] rounded-full backdrop-blur-sm transition-transform active:scale-90 flex items-center justify-center"
                 style={{
                   backgroundColor:
@@ -178,9 +196,11 @@ export function QuoteCard({
                       ? "rgba(255,255,255,0.15)"
                       : "rgba(0,0,0,0.1)",
                 }}
-                aria-label="Favorite quote"
+                aria-label={
+                  isFavorited ? "Remove from favorites" : "Add to favorites"
+                }
               >
-                <Heart size={18} />
+                <Heart size={18} fill={isFavorited ? "currentColor" : "none"} />
               </button>
             )}
           </div>
