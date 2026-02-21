@@ -20,10 +20,30 @@ export const metadata: Metadata = {
   description:
     "Discover and save inspiring Christian quotes from theologians, pastors, and leaders throughout history.",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
     title: "Christian Quotes",
+  },
+  openGraph: {
+    title: "Christian Quotes",
+    description:
+      "Discover and save inspiring Christian quotes from theologians, pastors, and leaders throughout history.",
+    type: "website",
+    siteName: "Christian Quotes",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Christian Quotes",
+    description:
+      "Discover and save inspiring Christian quotes from theologians, pastors, and leaders throughout history.",
   },
 };
 
@@ -43,9 +63,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
