@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { ConvexClientProvider } from "@/lib/convex-provider";
 import { AuthGuardProvider } from "@/hooks/useAuthGuard";
 import { AppShell } from "@/components/AppShell";
@@ -71,6 +72,7 @@ export default function RootLayout({
             <AppShell>{children}</AppShell>
           </AuthGuardProvider>
         </ConvexClientProvider>
+        <Analytics />
       </body>
     </html>
   );
