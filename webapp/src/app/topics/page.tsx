@@ -12,7 +12,7 @@ export default function TopicsPage() {
 
   if (selectedTopic) {
     return (
-      <div className="h-[calc(100dvh-7.5rem)] flex flex-col">
+      <div className="h-(--app-content-height) flex flex-col">
         <div className="flex items-center gap-3 px-4 py-3">
           <button
             onClick={() => setSelectedTopic(null)}

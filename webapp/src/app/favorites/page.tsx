@@ -33,7 +33,7 @@ export default function FavoritesPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100dvh-7.5rem)] gap-6 px-8 text-center">
+      <div className="flex flex-col items-center justify-center h-(--app-content-height) gap-6 px-8 text-center">
         <div className="w-20 h-20 rounded-full bg-surface-light flex items-center justify-center">
           <Heart size={36} className="text-primary" />
         </div>
@@ -57,7 +57,7 @@ export default function FavoritesPage() {
 
   if (!favorites) {
     return (
-      <div className="flex items-center justify-center h-[calc(100dvh-7.5rem)]">
+      <div className="flex items-center justify-center h-(--app-content-height)">
         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
@@ -65,7 +65,7 @@ export default function FavoritesPage() {
 
   if (favorites.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100dvh-7.5rem)] gap-4 px-8 text-center">
+      <div className="flex flex-col items-center justify-center h-(--app-content-height) gap-4 px-8 text-center">
         <div className="w-16 h-16 rounded-full bg-surface-light flex items-center justify-center">
           <Heart size={28} className="text-foreground/30" />
         </div>
@@ -80,7 +80,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="h-[calc(100dvh-7.5rem)] overflow-y-auto px-4 py-4 space-y-4">
+    <div className="h-(--app-content-height) overflow-y-auto px-4 py-4 space-y-4">
       <h2 className="text-lg font-bold text-foreground px-1">
         Your Favorites ({favorites.length})
       </h2>

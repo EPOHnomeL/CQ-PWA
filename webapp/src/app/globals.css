@@ -8,6 +8,15 @@
   --surface: #16213e;
   --surface-light: #1e2d4a;
   --accent: #f59e0b;
+  --app-safe-top: env(safe-area-inset-top, 0px);
+  --app-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --app-header-height: 3.5rem;
+  --app-nav-height: 4rem;
+  --app-header-offset: calc(var(--app-header-height) + var(--app-safe-top));
+  --app-nav-offset: calc(var(--app-nav-height) + var(--app-safe-bottom));
+  --app-content-height: calc(
+    100dvh - var(--app-header-offset) - var(--app-nav-offset)
+  );
 }
 
 @theme inline {
@@ -56,9 +65,9 @@ body {
 
 /* PWA safe areas */
 .safe-top {
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--app-safe-top);
 }
 
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: var(--app-safe-bottom);
 }

@@ -63,7 +63,7 @@ export function AuthorDetail({
   );
 
   return (
-    <div className="h-[calc(100dvh-7.5rem)] flex flex-col">
+    <div className="h-(--app-content-height) flex flex-col">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 py-3 shrink-0">
         <button

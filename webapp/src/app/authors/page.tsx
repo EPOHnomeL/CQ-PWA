@@ -44,7 +44,7 @@ export default function AuthorsPage() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100dvh-7.5rem)]">
+    <div className="flex flex-col h-(--app-content-height)">
       {/* Sticky header + search */}
       <div className="px-4 pt-4 pb-2 space-y-3 shrink-0">
         <h2 className="text-xl font-bold">Authors</h2>

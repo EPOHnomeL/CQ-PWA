@@ -93,7 +93,7 @@ export default function QuotePage({
 
   if (isSeeding) {
     return (
-      <div className="flex items-center justify-center h-[calc(100dvh-7.5rem)]">
+      <div className="flex items-center justify-center h-(--app-content-height)">
         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
@@ -101,7 +101,7 @@ export default function QuotePage({
 
   if (notFound) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100dvh-7.5rem)] gap-4 px-8 text-center">
+      <div className="flex flex-col items-center justify-center h-(--app-content-height) gap-4 px-8 text-center">
         <p className="text-lg text-foreground/60">Quote not found</p>
         <button
           onClick={() => router.push("/")}
@@ -116,7 +116,7 @@ export default function QuotePage({
 
   if (!quote) {
     return (
-      <div className="flex items-center justify-center h-[calc(100dvh-7.5rem)]">
+      <div className="flex items-center justify-center h-(--app-content-height)">
         <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     );
@@ -136,7 +136,7 @@ export default function QuotePage({
   };
 
   return (
-    <div className="h-[calc(100dvh-7.5rem)] p-4 flex flex-col gap-4">
+    <div className="h-(--app-content-height) p-4 flex flex-col gap-4">
       {/* Back button */}
       <button
         onClick={() => router.push("/")}
