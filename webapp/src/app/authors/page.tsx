@@ -1,17 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useAuthors, useTopics } from "@/hooks/useQuotes";
-import { AuthorDetail } from "@/components/AuthorDetail";
+import { useAuthors } from "@/hooks/useQuotes";
+import { useRouter } from "next/navigation";
 import { Search, User, ChevronRight } from "lucide-react";
 
 export default function AuthorsPage() {
+  const router = useRouter();
   const { authors, loading } = useAuthors();
-  const { topics } = useTopics();
-  const [selectedAuthor, setSelectedAuthor] = useState<{
-    name: string;
-    quoteCount: number;
-  } | null>(null);
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
@@ -31,17 +27,6 @@ export default function AuthorsPage() {
     }
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [filtered]);
-
-  if (selectedAuthor) {
-    return (
-      <AuthorDetail
-        authorName={selectedAuthor.name}
-        quoteCount={selectedAuthor.quoteCount}
-        topics={topics}
-        onBack={() => setSelectedAuthor(null)}
-      />
-    );
-  }
 
   return (
     <div className="flex flex-col h-(--app-content-height)">
@@ -93,12 +78,11 @@ export default function AuthorsPage() {
                     <button
                       key={author.name}
                       onClick={() =>
-                        setSelectedAuthor({
-                          name: author.name,
-                          quoteCount: author.quoteCount,
-                        })
+                        router.push(
+                          `/authors/${encodeURIComponent(author.name)}`,
+                        )
                       }
-                      className="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-surface-light active:scale-[0.98] transition-all group min-h-[44px]"
+                      className="w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-surface-light active:scale-[0.98] transition-all group min-h-11"
                     >
                       <div className="w-9 h-9 rounded-full bg-primary/15 text-primary flex items-center justify-center shrink-0">
                         <span className="text-sm font-semibold">
