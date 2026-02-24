@@ -243,6 +243,33 @@ export function useBooksByAuthor(authorName: string) {
   return { books, loading, refresh };
 }
 
+// Get all quotes by an author (for list views)
+export function useQuotesByAuthor(authorName: string) {
+  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true);
+      try {
+        const result = await db.quotes
+          .where("author")
+          .equals(authorName)
+          .sortBy("id");
+        setQuotes(result);
+      } catch (err) {
+        console.error("Error fetching quotes by author:", err);
+        setQuotes([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    void load();
+  }, [authorName]);
+
+  return { quotes, loading };
+}
+
 // Add a book to IndexedDB
 export async function addBook(book: Omit<Book, "id">): Promise<number> {
   const id = await db.books.add(book as Book);

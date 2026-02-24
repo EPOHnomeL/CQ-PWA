@@ -10,16 +10,24 @@ import {
   Quote,
   BookOpen,
   Globe,
+  Loader2,
+  FileSearch,
 } from "lucide-react";
 import {
   useBooksByAuthor,
+  useQuotesByAuthor,
   addBook,
   updateBook,
   deleteBook,
 } from "@/hooks/useQuotes";
-import { CardStack } from "./CardStack";
 import { BookEditor } from "./BookEditor";
 import type { Topic, Book } from "@/lib/types";
+import {
+  buildTopicColorMap,
+  getQuoteColor,
+  getQuoteGradient,
+  getTextColor,
+} from "@/lib/colors";
 
 interface AuthorDetailProps {
   authorName: string;
@@ -125,25 +133,6 @@ function splitIntoParagraphs(text: string): string[] {
     .split(/\n{2,}/)
     .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
     .filter((paragraph) => paragraph.length > 0);
-}
-
-function normalizeTextForCompare(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function isNarrativeRedundant(
-  shortText: string | null,
-  longText: string | null,
-): boolean {
-  if (!shortText || !longText) return false;
-  const shortNorm = normalizeTextForCompare(shortText);
-  const longNorm = normalizeTextForCompare(longText);
-  if (!shortNorm || !longNorm) return false;
-  return shortNorm.includes(longNorm) || longNorm.includes(shortNorm);
 }
 
 function getTestimonySnippet(text: string): string | null {
@@ -324,6 +313,8 @@ export function AuthorDetail({
     loading: booksLoading,
     refresh,
   } = useBooksByAuthor(authorName);
+  const { quotes: authorQuotes, loading: quotesLoading } =
+    useQuotesByAuthor(authorName);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [showAddBook, setShowAddBook] = useState(false);
   const [activeTab, setActiveTab] = useState<"details" | "quotes" | "books">(
@@ -603,52 +594,49 @@ export function AuthorDetail({
     { label: "Denomination", value: wikiBio.fields.denomination },
   ].filter((row) => Boolean(row.value));
 
-  const narrativeSection = useMemo(() => {
-    if (wikiBio.testimony) {
-      return {
-        title: "Testimony",
-        body: wikiBio.testimony,
-      };
-    }
-
-    if (!wikiBio.biography) return null;
-    if (isNarrativeRedundant(wikiBio.summary, wikiBio.biography)) return null;
-
-    return {
-      title: "Biography",
-      body: wikiBio.biography,
-    };
-  }, [wikiBio.testimony, wikiBio.biography, wikiBio.summary]);
+  const topicColorMap = useMemo(() => buildTopicColorMap(topics), [topics]);
+  const wikiSearchUrl = useMemo(
+    () =>
+      `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(
+        authorName,
+      )}`,
+    [authorName],
+  );
+  const hasHeroImage = Boolean(wikiBio.imageUrl);
 
   return (
-    <div className="h-(--app-content-height) flex flex-col">
+    <div className="h-(--app-content-height) overflow-y-auto">
       <div className="px-4 pt-3 pb-2 shrink-0 space-y-2">
         <div className="relative rounded-2xl overflow-hidden bg-surface-light">
-          {wikiBio.imageUrl ? (
+          {hasHeroImage ? (
             <img
-              src={wikiBio.imageUrl}
+              src={wikiBio.imageUrl ?? undefined}
               alt={authorName}
-              className="h-36 sm:h-40 w-full object-cover"
+              className="w-full h-auto"
               loading="lazy"
             />
           ) : (
-            <div className="h-36 sm:h-40 w-full bg-linear-to-br from-primary/35 via-primary/20 to-surface-light flex items-center justify-center">
-              <span className="text-5xl font-semibold text-white/90">
+            <div className="relative h-36 sm:h-40 w-full bg-linear-to-br from-primary/35 via-primary/20 to-surface-light overflow-hidden">
+              <span className="absolute right-3 top-0 text-7xl font-bold text-white/20 select-none">
                 {authorName.charAt(0)}
               </span>
+              <div className="absolute left-3 top-3 rounded-full bg-surface/70 text-white/80 text-[10px] font-medium px-2.5 py-1 border border-white/10">
+                No photo
+              </div>
             </div>
           )}
 
-          <div className="absolute inset-0 bg-linear-to-t from-background/95 via-background/35 to-transparent" />
+          <div className="absolute inset-0 z-10 bg-linear-to-t from-background/95 via-background/35 to-transparent" />
 
           <button
             onClick={onBack}
-            className="absolute top-2 left-2 h-10 w-10 rounded-xl bg-background/65 backdrop-blur text-foreground/85 hover:text-foreground transition-colors flex items-center justify-center"
+            aria-label="Go back"
+            className="absolute top-0 left-0 z-30 m-2 h-10 w-10 rounded-xl border border-white/25 bg-black/55 shadow-lg backdrop-blur text-white hover:text-white transition-colors flex items-center justify-center"
           >
             <ArrowLeft size={18} />
           </button>
 
-          <div className="absolute inset-x-0 bottom-0 px-3.5 pb-3 pt-10">
+          <div className="absolute inset-x-0 bottom-0 z-20 px-3.5 pb-3 pt-10">
             <h2 className="text-lg font-semibold truncate text-white">
               {authorName}
             </h2>
@@ -703,25 +691,39 @@ export function AuthorDetail({
         </div>
       </div>
 
-      <div className="flex-1 px-4 pb-3 min-h-0">
+      <div className="px-4 pb-3">
         {activeTab === "details" ? (
-          <div className="h-full overflow-y-auto space-y-2.5 pr-0.5">
+          <div className="space-y-2.5 pr-0.5">
             <div className="px-1 py-1">
               <p className="text-xs font-semibold tracking-wide text-foreground/55 uppercase">
                 About
               </p>
               {wikiBio.loading ? (
-                <p className="mt-1.5 text-sm text-foreground/45">
-                  Loading author profile…
-                </p>
+                <div className="mt-2 space-y-2 animate-pulse">
+                  <div className="h-4 rounded bg-surface-light" />
+                  <div className="h-4 rounded bg-surface-light" />
+                  <div className="h-4 w-3/4 rounded bg-surface-light" />
+                </div>
               ) : wikiBio.summary ? (
                 <p className="mt-1.5 text-sm text-foreground/85 leading-relaxed">
                   {wikiBio.summary}
                 </p>
               ) : (
-                <p className="mt-1.5 text-sm text-foreground/45">
-                  No Wikipedia summary found for this author.
-                </p>
+                <div className="mt-2 rounded-xl bg-surface-light px-3 py-3 text-sm text-foreground/55">
+                  <div className="inline-flex items-center gap-2 font-medium text-foreground/70">
+                    <FileSearch size={14} />
+                    No summary found.
+                  </div>
+                  <a
+                    href={wikiSearchUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-primary hover:text-primary-light transition-colors"
+                  >
+                    Search Wikipedia
+                    <ChevronRight size={12} />
+                  </a>
+                </div>
               )}
             </div>
 
@@ -730,9 +732,17 @@ export function AuthorDetail({
                 Details
               </p>
               {wikiBio.loading ? (
-                <p className="mt-1.5 text-sm text-foreground/45">
-                  Loading details…
-                </p>
+                <div className="mt-2 space-y-2 animate-pulse">
+                  {Array.from({ length: 4 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-[minmax(88px,112px)_1fr] gap-2.5"
+                    >
+                      <div className="h-4 rounded bg-surface-light" />
+                      <div className="h-4 rounded bg-surface-light" />
+                    </div>
+                  ))}
+                </div>
               ) : detailRows.length > 0 ? (
                 <div className="mt-2 divide-y divide-foreground/10">
                   {detailRows.map((row) => (
@@ -750,9 +760,10 @@ export function AuthorDetail({
                   ))}
                 </div>
               ) : (
-                <p className="mt-1.5 text-sm text-foreground/45">
-                  No structured details found for this author.
-                </p>
+                <div className="mt-2 rounded-xl bg-surface-light px-3 py-3 text-sm text-foreground/55 inline-flex items-center gap-2">
+                  <FileSearch size={14} />
+                  No structured details found.
+                </div>
               )}
 
               {wikiBio.url && (
@@ -768,7 +779,7 @@ export function AuthorDetail({
               )}
             </div>
 
-            {narrativeSection && (
+            {/* {narrativeSection && (
               <div className="rounded-2xl bg-surface-light/60 px-3.5 py-3 border-l-2 border-primary/45">
                 <p className="text-xs font-semibold tracking-wide text-foreground/55 uppercase">
                   {narrativeSection.title}
@@ -777,12 +788,88 @@ export function AuthorDetail({
                   {narrativeSection.body}
                 </p>
               </div>
-            )}
+            )} */}
           </div>
         ) : activeTab === "quotes" ? (
-          <CardStack author={authorName} topics={topics} />
+          <div className="space-y-3 pr-0.5">
+            {quotesLoading ? (
+              <div className="space-y-3">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="rounded-2xl bg-surface-light p-5 animate-pulse space-y-3"
+                  >
+                    <div className="flex gap-2">
+                      <div className="h-5 w-14 rounded-full bg-background/40" />
+                      <div className="h-5 w-12 rounded-full bg-background/40" />
+                    </div>
+                    <div className="h-4 rounded bg-background/40" />
+                    <div className="h-4 rounded bg-background/40" />
+                    <div className="h-4 w-2/3 rounded bg-background/40" />
+                  </div>
+                ))}
+              </div>
+            ) : authorQuotes.length > 0 ? (
+              <>
+                <p className="text-xs font-semibold tracking-wide text-foreground/55 uppercase px-1">
+                  Quotes ({authorQuotes.length})
+                </p>
+                {authorQuotes.map((quote) => {
+                  const color = getQuoteColor(quote.topics, topicColorMap);
+                  const gradient = getQuoteGradient(
+                    quote.topics,
+                    topicColorMap,
+                  );
+                  const textColor = getTextColor(color);
+
+                  return (
+                    <div
+                      key={quote.id}
+                      className="rounded-2xl p-5 shadow-lg relative overflow-hidden"
+                      style={{ background: gradient, color: textColor }}
+                    >
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {quote.topics.map((topic) => (
+                          <span
+                            key={`${quote.id}-${topic}`}
+                            className="px-2 py-0.5 rounded-full text-[10px] font-medium backdrop-blur-sm"
+                            style={{
+                              backgroundColor:
+                                textColor === "#ffffff"
+                                  ? "rgba(255,255,255,0.15)"
+                                  : "rgba(0,0,0,0.1)",
+                            }}
+                          >
+                            {topic}
+                          </span>
+                        ))}
+                      </div>
+
+                      <blockquote className="text-sm leading-relaxed font-serif italic mb-3">
+                        &ldquo;{quote.quote}&rdquo;
+                      </blockquote>
+
+                      <p className="text-xs font-semibold opacity-80">
+                        — {quote.author}
+                      </p>
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <div className="rounded-2xl bg-surface-light text-sm text-foreground/45 px-4 py-10 text-center">
+                <div className="inline-flex items-center gap-2 text-foreground/65 font-medium">
+                  <Quote size={16} />
+                  No quotes found yet.
+                </div>
+                <p className="mt-1 text-xs text-foreground/45">
+                  This author may not have imported quotes in your local data.
+                </p>
+              </div>
+            )}
+          </div>
         ) : (
-          <div className="h-full overflow-y-auto space-y-2.5 pr-0.5">
+          <div className="space-y-2.5 pr-0.5">
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold tracking-wide text-foreground/55 uppercase">
                 Books
@@ -797,7 +884,8 @@ export function AuthorDetail({
             </div>
 
             {booksLoading && booksForTab.length === 0 ? (
-              <div className="rounded-2xl bg-surface-light p-4 text-sm text-foreground/45">
+              <div className="rounded-2xl bg-surface-light p-4 text-sm text-foreground/45 inline-flex items-center gap-2">
+                <Loader2 size={14} className="animate-spin" />
                 Loading books…
               </div>
             ) : booksForTab.length > 0 ? (
@@ -842,7 +930,13 @@ export function AuthorDetail({
               </div>
             ) : (
               <div className="rounded-2xl bg-surface-light p-4 text-sm text-foreground/45">
-                No books found for this author yet.
+                <div className="inline-flex items-center gap-2 text-foreground/65 font-medium">
+                  <BookOpen size={14} />
+                  No books found yet.
+                </div>
+                <p className="mt-1 text-xs text-foreground/45">
+                  Add a book manually or wait for Wikipedia notable works.
+                </p>
               </div>
             )}
           </div>
